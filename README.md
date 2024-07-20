@@ -8,13 +8,14 @@ Float2Int is a neural network designed to leverage integer arithmetic for improv
 
 ### Integer Representation
 
-Float2Int uses a simple but effective method to represent floating-point numbers as integers. Given a floating-point number \( x \), it is scaled by a factor \( S_f = 10^6 \) (or any other suitable scale) and then converted to an integer. For example:
+Float2Int uses a simple but effective method to represent floating-point numbers as integers. Given a floating-point number $\( x )\$, it is scaled by a factor $\( S_f = 10^6 )\$ (or any other suitable scale) and then converted to an integer. For example:
 
-$$ x_{\text{int}} = \text{round}(x \times S_f) $$
+$\ x_{\text{int}} = \text{round}(x \times S_f) \$
 
 To convert back to the original floating-point representation, the integer is scaled down:
 
-$$ x_{\text{float}} = x_{\text{int}} \times S_f^{-1} $$
+$\ x_{\text{float}} = x_{\text{int}} \times S_f^{-1} \$
+
 
 ### Mathematical Operations
 
@@ -22,23 +23,28 @@ Key mathematical operations are implemented to work directly with these scaled i
 
 1. **Matrix Multiplication**:
 
-$$ C[i, j] = \left( \sum_{k} A[i, k] \times B[k, j] \right) // S_f $$
+$\ C[i, j] = \left( \sum_{k} A[i, k] \times B[k, j] \right) // S_f \$
+
 
 2. **ReLU Activation**:
 
-$$ \text{ReLU}(x) = \max(0, x) $$
+$\ \text{ReLU}(x) = \max(0, x) \$
+
 
 3. **Exponential Function (Taylor Series Approximation)**:
 
-$$ \text{exp}(x) \approx S_f + x + \frac{x^2}{2 S_f} + \frac{x^3}{6 S_f^2} $$
+$\ \text{exp}(x) \approx S_f + x + \frac{x^2}{2 S_f} + \frac{x^3}{6 S_f^2} \$
+
 
 4. **Softmax Function**:
 
-$$ \text{softmax}(x_i) = \frac{\text{exp}(x_i)}{\sum_j \text{exp}(x_j)} $$
+$\ \text{softmax}(x_i) = \frac{\text{exp}(x_i)}{\sum_j \text{exp}(x_j)} \$
+
 
 5. **Logarithm (Taylor Series Approximation)**:
 
-$$ \log(1 + x) \approx x - \frac{x^2}{2} + \frac{x^3}{3} $$
+$\ \log(1 + x) \approx x - \frac{x^2}{2} + \frac{x^3}{3} \$
+
 
 ### Neural Network Architecture
 
