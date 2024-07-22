@@ -1,63 +1,91 @@
-# Float2Int: An Efficient Neural Network with Integer Operations
+# float2int: Fixed-Point Neural Network Implementation
+
+## Overview
+
+float2int is an innovative neural network architecture that uses fixed-point arithmetic for improved performance and efficiency. This implementation demonstrates how to convert floating-point operations to integer operations in neural networks, potentially leading to faster computation and reduced memory usage.
+
+## Note on Implementation
+
+This is a basic implementation of the float2int architecture. Due to time constraints, some optimizations and advanced features are not yet implemented. However, this serves as a solid foundation for further development and exploration of fixed-point arithmetic in neural networks.
+
+I encourage contributions from the community! If you have ideas for improvements or want to extend the functionality, please feel free to fork the repository and submit pull requests. Your input can help evolve this project into a more robust and efficient framework for fixed-point neural networks.
 
 ## Introduction
 
-Float2Int is a neural network designed to leverage integer arithmetic for improved computational efficiency without compromising performance. Traditional neural networks rely on floating-point operations, which can be computationally expensive. By converting floating-point numbers to integers, Float2Int aims to reduce the computational load, leading to faster training and inference times. This approach is conceptually similar to quantization, where neural networks maintain high accuracy even with lower precision representations.
+float2int converts standard floating-point neural network operations to fixed-point integer operations. This approach can offer several advantages:
 
-## Methodology
+- Reduced memory usage
+- Potential for faster computation
+- Improved compatibility with hardware accelerators
 
-### Integer Representation
+The implementation includes a full neural network pipeline, from data preprocessing to training and evaluation, all using fixed-point arithmetic.
 
-Float2Int uses a simple but effective method to represent floating-point numbers as integers. Given a floating-point number $\( x )\$, it is scaled by a factor $\( S_f = 10^6 )\$ (or any other suitable scale) and then converted to an integer. For example:
+## Architecture
 
-$\ x_{\text{int}} = \text{round}(x \times S_f) \$
+float2int implements a multi-layer perceptron (MLP) using fixed-point arithmetic. Key components include:
 
-To convert back to the original floating-point representation, the integer is scaled down:
+1. `FixedPointArray`: Converts floating-point data to fixed-point representation
+2. `IntLayer`: Implements a neural network layer using integer operations
+3. `IntNetwork`: Combines multiple IntLayers to form a complete neural network
 
-$\ x_{\text{float}} = x_{\text{int}} \times S_f^{-1} \$
+The architecture supports various activation functions (ReLU, softmax) and implements backpropagation for training.
 
+## Mathematical Foundation
 
-### Mathematical Operations
+### Scale Factor
 
-Key mathematical operations are implemented to work directly with these scaled integers. This includes:
+The core of float2int is the scale factor ($`sf`$), which converts floating-point numbers to fixed-point integers:
 
-1. **Matrix Multiplication**:
+$`x_{int} = round(x_{float} \cdot sf)`$
 
-$\ C[i, j] = \left( \sum_{k} A[i, k] \times B[k, j] \right) // S_f \$
+We use $`sf = 2^{20}`$ in this implementation. This choice balances precision and the range of representable values.
 
+### Integer Operations
 
-2. **ReLU Activation**:
+Basic arithmetic operations are modified to work with fixed-point integers:
 
-$\ \text{ReLU}(x) = \max(0, x) \$
+1. Addition and Subtraction: Performed directly on integers
+2. Multiplication: $`z = \frac{x \cdot y}{sf}`$
+3. Division: $`z = \frac{x \cdot sf}{y}`$
 
+### Activation Functions
 
-3. **Exponential Function (Taylor Series Approximation)**:
+ReLU remains straightforward:
 
-$\ \text{exp}(x) \approx S_f + x + \frac{x^2}{2 S_f} + \frac{x^3}{6 S_f^2} \$
+$`ReLU(x) = max(0, x)`$
 
+Softmax requires more careful handling:
 
-4. **Softmax Function**:
+$`softmax(x_i) = \frac{e^{x_i / sf}}{\sum_j e^{x_j / sf}} \cdot sf`$
 
-$\ \text{softmax}(x_i) = \frac{\text{exp}(x_i)}{\sum_j \text{exp}(x_j)} \$
+### Loss Function
 
+The cross-entropy loss is adapted for fixed-point:
 
-5. **Logarithm (Taylor Series Approximation)**:
+$`L = -\frac{1}{N} \sum_i y_i \cdot log(\frac{y_{pred,i}}{sf})`$
 
-$\ \log(1 + x) \approx x - \frac{x^2}{2} + \frac{x^3}{3} \$
+### Backpropagation
 
+Gradients are computed and applied using fixed-point arithmetic, maintaining the scale factor throughout the process.
 
-### Neural Network Architecture
+## Performance
 
-The network is constructed using layers of neurons, where each layer performs integer-based operations. The architecture typically includes:
-
-- Input layer: Takes the scaled integer inputs.
-- Hidden layers: Perform matrix multiplications, followed by ReLU activations.
-- Output layer: Computes the softmax probabilities.
-
-### Training
-
-During training, the network performs forward and backward passes using integer arithmetic. The loss function, cross-entropy in this case, is computed in the integer domain. Gradients are also represented as integers, and the weights are updated using integer arithmetic.
+The performance of float2int is demonstrated on the MNIST dataset. The implementation includes data loading, preprocessing, training, and evaluation.
 
 ## Results
 
-*Results will be populated here once the experiments are conducted.*
+[This section intentionally left blank for you to fill in with actual results from running the model]
+
+## Further Improvements
+
+[This section intentionally left blank for you to suggest potential enhancements to the architecture]
+
+## Citation
+
+If you use float2int in your research, please cite:
+
+```
+Will Kusch. (2024). float2int: Fixed-Point Neural Network Implementation. Relative Companies.
+```
+
+For further information, contact me at will@relativecompanies.com.
