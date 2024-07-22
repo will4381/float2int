@@ -75,10 +75,3 @@ The current implementation shows limited learning capacity. The model achieves a
 8. Develop a custom CUDA kernel for fixed-point operations to leverage GPU acceleration.
 9. Implement pruning and quantization techniques to further reduce model size and computation time.
 10. Explore mixed-precision training, using higher precision for sensitive operations and lower precision for others.
-
-## Citation
-If you use float2int in your research, please cite:
-```
-Will Kusch. (2024). float2int: Fixed-Point Neural Network Implementation. Relative Companies.
-```
-For further information, contact me at will@relativecompanies.com.
