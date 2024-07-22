@@ -6,8 +6,6 @@ float2int is an innovative neural network architecture that uses fixed-point ari
 ## Note on Implementation
 This is a basic implementation of the float2int architecture. Due to time constraints, some optimizations and advanced features are not yet implemented. However, this serves as a solid foundation for further development and exploration of fixed-point arithmetic in neural networks.
 
-I encourage contributions from the community! If you have ideas for improvements or want to extend the functionality, please feel free to fork the repository and submit pull requests. Your input can help evolve this project into a more robust and efficient framework for fixed-point neural networks.
-
 ## Introduction
 float2int converts standard floating-point neural network operations to fixed-point integer operations. This approach can offer several advantages:
 - Reduced memory usage
