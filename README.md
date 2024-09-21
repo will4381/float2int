@@ -57,7 +57,7 @@ The current implementation shows limited learning capacity. The model achieves a
 
 ## Current Problems
 1. Slow Convergence: The model is not showing significant improvement over multiple epochs.
-2. Low Accuracy: The model's performance is only slightly better than random guessing.
+2. Low Accuracy: The model's performance sits around 20% accuracy.
 3. Constant Loss: The loss value remains unchanged, suggesting issues with gradient propagation or numerical stability.
 4. Computational Efficiency: The training process is still slow, with matrix multiplications being a major bottleneck.
 5. Numerical Precision: The current fixed-point representation may not provide enough precision for effective learning.
